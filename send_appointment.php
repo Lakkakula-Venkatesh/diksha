@@ -2,8 +2,7 @@
 header('Content-Type: application/json');
 
 // 1. Configuration (CHANGE THESE)
-// $receiving_email = 'dikshafertility@gmail.com';
-$receiving_email = 'sureshtirumalababu@gmail.com';
+$receiving_email = 'dikshafertility@gmail.com';
 $subject = 'NEW APPOINTMENT REQUEST - Diksha IVF Center';
 $from_email = 'no-reply@dikshaivf.in'; // **CHANGE to a working email on your domain**
 
