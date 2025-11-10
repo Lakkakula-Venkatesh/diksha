@@ -2,7 +2,8 @@
 header('Content-Type: application/json');
 
 // 1. Configuration (CHANGE THESE)
-$receiving_email = 'lakkakula.venkatesh8726@gmail.com'; // **CHANGE to the Doctor's Email**
+// $receiving_email = 'dikshafertility@gmail.com';
+$receiving_email = 'sureshtirumalababu@gmail.com';
 $subject = 'NEW APPOINTMENT REQUEST - Diksha IVF Center';
 $from_email = 'no-reply@dikshaivf.in'; // **CHANGE to a working email on your domain**
 
@@ -29,6 +30,7 @@ $name = filter_var($data['name'], FILTER_SANITIZE_STRING);
 $email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
 $phone = filter_var($data['phone'], FILTER_SANITIZE_STRING);
 $date = filter_var($data['date'], FILTER_SANITIZE_STRING);
+$time = filter_var($data['time'], FILTER_SANITIZE_STRING) ?: 'Not Specified';
 $service = filter_var($data['service'], FILTER_SANITIZE_STRING) ?: 'Not Specified';
 $message = filter_var($data['message'], FILTER_SANITIZE_STRING) ?: 'No additional message.';
 
@@ -38,6 +40,7 @@ $email_body .= "Name: " . $name . "\n";
 $email_body .= "Email: " . $email . "\n";
 $email_body .= "Phone: " . $phone . "\n";
 $email_body .= "Preferred Date: " . $date . "\n";
+$email_body .= "Preferred Time for Callback: " . $time . "\n";
 $email_body .= "Requested Service: " . $service . "\n";
 $email_body .= "Message: \n" . $message . "\n\n";
 $email_body .= "--- \n(Please contact the user using the details above.)";
