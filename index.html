@@ -864,45 +864,45 @@
                     const offsetPosition = elementPosition - headerHeight - 20; // Extra 20px padding
 
                     window.scrollTo({
-                         top: offsetPosition,
-                         behavior: "smooth"
-                     });
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
 
 
                 } else {
-                     // Default to home if target not found
-                     const homeSection = document.getElementById('home');
-                     setTimeout(() => {
+                    // Default to home if target not found
+                    const homeSection = document.getElementById('home');
+                    setTimeout(() => {
                         homeSection.style.display = 'block';
                         void homeSection.offsetWidth;
                         homeSection.classList.add('active');
-                     }, 0);
+                    }, 0);
                 }
 
                  // Update active link styling for desktop nav
                 document.querySelectorAll('header nav .nav-link').forEach(link => {
                     link.classList.remove('active', 'text-pink-600', 'font-semibold');
                     link.classList.add('text-gray-600');
-                     // Special handling for the button-like link
+                    // Special handling for the button-like link
                     if (!link.classList.contains('bg-pink-600')) {
                         link.style.borderBottom = 'none';
                         link.style.paddingBottom = '';
                     }
                     if (link.dataset.target === targetId) {
-                         // Style active link differently based on whether it's the button
+                        // Style active link differently based on whether it's the button
                         if (link.classList.contains('bg-pink-600')) {
                             // Keep button style, maybe add subtle active state if desired
                         } else {
                             link.classList.add('active', 'text-pink-600', 'font-semibold');
                             link.classList.remove('text-gray-600');
                             link.style.borderBottom = '2px solid #ec4899'; // Reapply style
-                             link.style.paddingBottom = '2px';
+                            link.style.paddingBottom = '2px';
                         }
                     }
                 });
 
-                 // Close mobile menu after navigation
-                 mobileMenu.classList.add('hidden');
+                // Close mobile menu after navigation
+                mobileMenu.classList.add('hidden');
             };
 
             // Initial page load based on hash or default to home
@@ -918,17 +918,17 @@
                         const targetId = link.dataset.target;
                         if (targetId) {
                             // Update hash only if targetId exists
-                           window.location.hash = targetId;
+                            window.location.hash = targetId;
                         }
-                         // Close mobile menu if a mobile link was clicked
+                        // Close mobile menu if a mobile link was clicked
                         if (link.classList.contains('mobile-nav-link')) {
-                           mobileMenu.classList.add('hidden');
+                            mobileMenu.classList.add('hidden');
                         }
                     }
                 });
             });
 
-             // Listen for hash changes to navigate (handles back/forward buttons and direct hash links)
+            // Listen for hash changes to navigate (handles back/forward buttons and direct hash links)
             window.addEventListener('hashchange', () => {
                 const targetId = window.location.hash.substring(1) || 'home';
                 navigateTo(targetId);
@@ -950,71 +950,50 @@
                     submitButton.disabled = true;
                     submitButton.textContent = 'Sending...';
 
-
                     const formData = new FormData(appointmentForm);
                     const data = Object.fromEntries(formData.entries());
 
-                    console.log('Form data captured:', data);
-
-                    // --- BACKEND INTEGRATION POINT ---
-                    // **IMPORTANT**: Replace the simulation below
-                    // with your actual backend call (e.g., using fetch).
-
-                    // Example using fetch (replace URL with your endpoint):
-                    /*
                     try {
-                        const response = await fetch('YOUR_BACKEND_ENDPOINT', { // <--- REPLACE THIS URL
+                        const response = await fetch('send_appointment.php', { // Target the PHP script
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
                             body: JSON.stringify(data)
                         });
 
-                        if (response.ok) {
-                            console.log('Form submitted successfully to backend.');
+                        const result = await response.json();
+
+                        if (response.ok && result.success) {
+                            console.log('Server response:', result.message);
                             appointmentForm.reset();
-                            const today = new Date(); today.setDate(today.getDate() + 1);
-                            if(dateInput) dateInput.setAttribute('min', today.toISOString().split('T')[0]);
+                            const today = new Date(); 
+                            today.setDate(today.getDate() + 1);
+                            if (dateInput) { dateInput.setAttribute('min', today.toISOString().split('T')[0]); }
                             confirmationMessage.classList.remove('hidden');
                             confirmationMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            // Optional: Hide confirmation after 10s
+                            setTimeout(() => { confirmationMessage.classList.add('hidden'); }, 10000);
                         } else {
-                             const errorData = await response.text(); // Or response.json() if backend sends JSON error
-                             console.error('Backend error:', response.status, errorData);
-                             throw new Error(`Server responded with status: ${response.status}`);
+                            // Handle PHP errors or failed mail function
+                            console.error('Submission failed:', result.message || 'Unknown error');
+                            errorMessage.querySelector('p:last-child').textContent = result.message || 'Please check server logs or call the clinic.';
+                            errorMessage.classList.remove('hidden');
+                            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                             setTimeout(() => { errorMessage.classList.add('hidden'); }, 10000);
                         }
-                    } catch (error) {
-                        console.error('Error submitting form:', error);
-                        errorMessage.classList.remove('hidden');
-                         errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } finally {
-                         submitButton.disabled = false;
-                         submitButton.textContent = 'Send Request';
-                    }
-                    */
-
-                    // --- Simulation for Static Site (REMOVE FOR PRODUCTION) ---
-                    try {
-                        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
-                        // Simulate random success/failure
-                        // if (Math.random() < 0.1) { throw new Error("Simulated network error"); }
-
-                        console.log('Simulating successful form submission.');
-                        appointmentForm.reset();
-                         const today = new Date(); today.setDate(today.getDate() + 1);
-                         if (dateInput) { dateInput.setAttribute('min', today.toISOString().split('T')[0]); }
-                        confirmationMessage.classList.remove('hidden');
-                        confirmationMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        setTimeout(() => { confirmationMessage.classList.add('hidden'); }, 10000);
 
                     } catch (error) {
-                         console.error('Simulated error:', error);
+                         // Handle network errors (e.g., PHP file not found or server is down)
+                         console.error('Network or Parse Error:', error);
+                         errorMessage.querySelector('p:last-child').textContent = 'Cannot connect to the server. Please call us directly.';
                          errorMessage.classList.remove('hidden');
                          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                           setTimeout(() => { errorMessage.classList.add('hidden'); }, 10000);
+                         setTimeout(() => { errorMessage.classList.add('hidden'); }, 10000);
                     } finally {
                          submitButton.disabled = false;
                          submitButton.textContent = 'Send Request';
                     }
-                    // --- End Simulation ---
 
                 });
             }
