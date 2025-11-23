@@ -83,6 +83,12 @@
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(236, 72, 153, 0.2);
         }
+        /* Specific card for services to be more subtle */
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(236, 72, 153, 0.1);
+        }
+
 
         /* Form styling */
         .form-input {
@@ -99,32 +105,6 @@
         }
         .btn-primary:hover {
             background-color: #db2777;
-        }
-
-        .testimonial-track {
-            display: flex;
-            animation: scroll-testimonials 60s linear infinite; /* 60s speed for entire track */
-        }
-
-        /* Define the scrolling animation */
-        @keyframes scroll-testimonials {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Scrolls the entire duplicated content */
-        }
-
-        .horizontal-scroller:hover .testimonial-track {
-            animation-play-state: paused;
-        }
-
-        /* Custom styles for horizontal testimonial scroller */
-        .horizontal-scroller {
-            /* To hide scrollbar visually */
-            -webkit-overflow-scrolling: touch; 
-            scrollbar-width: none; 
-            overflow: hidden; /* Crucial: Hides the main overflow */
-        }
-        .horizontal-scroller::-webkit-scrollbar {
-            display: none; 
         }
 
         /* Testimonial quote style */
@@ -177,6 +157,74 @@
             border-radius: 0 0 8px 8px;
         }
 
+        /* --- TESTIMONIAL AUTO SCROLL STYLES --- */
+        .testimonial-track {
+            display: flex;
+            animation: scroll-testimonials 60s linear infinite; /* 60s speed for entire track */
+        }
+
+        /* Define the scrolling animation */
+        @keyframes scroll-testimonials {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Scrolls the entire duplicated content */
+        }
+
+        /* Pause animation on hover */
+        .horizontal-scroller:hover .testimonial-track {
+            animation-play-state: paused;
+        }
+
+        /* Custom styles for horizontal testimonial scroller */
+        .horizontal-scroller {
+            /* To hide scrollbar visually */
+            -webkit-overflow-scrolling: touch; 
+            scrollbar-width: none; 
+            overflow: hidden; /* Crucial: Hides the main overflow */
+        }
+        .horizontal-scroller::-webkit-scrollbar {
+            display: none; 
+        }
+
+        /* CORRECTED STYLING: Ensure proper spacing for the items within the track */
+        .testimonial-item {
+             /* Set a fixed width for the card item */
+             flex: 0 0 auto; /* Prevent stretching/shrinking */
+             min-width: 85vw; /* Make it wide on mobile */
+             max-width: 400px;
+             margin-right: 24px; /* Space between cards */
+        }
+        @media (min-width: 768px) {
+            .testimonial-item {
+                min-width: 384px; /* md:w-96, setting min-width ensures it doesn't collapse */
+            }
+        }
+        
+        .gallery-track {
+            display: flex;
+            animation: scroll-gallery 80s linear infinite; /* Slower speed for large images */
+            width: 200%; /* Required for seamless loop */
+        }
+        @keyframes scroll-gallery {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } 
+        }
+        .gallery-scroller:hover .gallery-track {
+            animation-play-state: paused;
+        }
+        .gallery-item {
+            flex: 0 0 auto;
+            width: 90vw; /* Mobile width */
+            height: 40vh; /* Fixed height for image consistency */
+            margin-right: 16px;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        @media (min-width: 768px) {
+            .gallery-item {
+                width: 30vw;
+                height: 45vh;
+            }
+        }
     </style>
 </head>
 
@@ -201,6 +249,7 @@
                 <a href="#services" class="nav-link text-gray-600 hover:text-pink-600 transition-colors" data-target="services">Services</a>
                 <!-- <a href="#packages" class="nav-link text-gray-600 hover:text-pink-600 transition-colors" data-target="packages">IVF Packages</a> -->
                 <!-- <a href="#testimonials" class="nav-link text-gray-600 hover:text-pink-600 transition-colors" data-target="testimonials">Success Stories</a> -->
+                <a href="#gallery" class="nav-link text-gray-600 hover:text-pink-600 transition-colors" data-target="gallery">Gallery</a> <!-- NEW GALLERY LINK -->
                 <a href="#faqs" class="nav-link text-gray-600 hover:text-pink-600 transition-colors" data-target="faqs">FAQs</a>
                 <a href="#contact" class="nav-link text-gray-600 hover:text-pink-600 transition-colors" data-target="contact">Contact Us</a>
                 <a href="#appointment" class="nav-link bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-full font-semibold transition-colors shadow-md" data-target="appointment">Book Appointment</a>
@@ -219,6 +268,7 @@
             <a href="#services" class="block mobile-nav-link px-4 py-3 text-gray-700 hover:bg-pink-50" data-target="services">Services</a>
             <!-- <a href="#packages" class="block mobile-nav-link px-4 py-3 text-gray-700 hover:bg-pink-50" data-target="packages">IVF Packages</a> -->
             <!-- <a href="#testimonials" class="block mobile-nav-link px-4 py-3 text-gray-700 hover:bg-pink-50" data-target="testimonials">Success Stories</a> -->
+            <a href="#gallery" class="block mobile-nav-link px-4 py-3 text-gray-700 hover:bg-pink-50" data-target="gallery">Gallery</a> <!-- NEW GALLERY LINK -->
             <a href="#faqs" class="block mobile-nav-link px-4 py-3 text-gray-700 hover:bg-pink-50" data-target="faqs">FAQs</a>
             <a href="#contact" class="block mobile-nav-link px-4 py-3 text-gray-700 hover:bg-pink-50" data-target="contact">Contact Us</a>
             <a href="#appointment" class="block mobile-nav-link px-4 py-3 text-center bg-pink-600 text-white font-semibold rounded-b-lg hover:bg-pink-700" data-target="appointment">Book Appointment</a>
@@ -256,6 +306,44 @@
                          <p>We use the newest science for best results.</p>
                      </div>
                  </div>
+            </div>
+
+            <div class="container mx-auto px-4 mt-16">
+                 <div class="grid md:grid-cols-2 gap-8 items-start bg-gray-50 p-8 rounded-xl shadow-md">
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Lab in Action: Expertise You Can Trust</h3>
+                        <p class="text-gray-700 mb-4">Our specialized laboratory environment is key to our success. We take extra care for <b>hygiene and cleanliness</b> and use only the best equipment:</p>
+
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-6">
+                            <li><b>Pristine Air Quality:</b> We use special <b>HEPA filters</b> to ensure a bacteria and dust-free environment for embryo growth.</li>
+                            <li><b>Operation Theatre:</b> Directly next to the lab, sealed to protect eggs/embryos from environmental changes during transfer.</li>
+                            <li><b>Precision Equipment:</b> Globally trusted <b>Nikon-Narishige systems</b> (Micromanipulators) are used for precision micro-fertilization (ICSI).</li>
+                            <li><b>Incubators:</b> Top-of-the-line <b>Carbon Dioxide Incubators</b> maintain optimal conditions for fertilization and embryo formation.</li>
+                            <li><b>Disposable Media:</b> We use only single-use, <b>imported media and plastic ware</b> (from Sweden, Denmark, UK, etc.) to maintain high standards and prevent disease transmission (HIV, Hepatitis B).</li>
+                        </ul>
+                        <p class="text-sm font-semibold text-pink-600 mt-4">
+                            *The images on the right show our team preparing samples and using the high-tech equipment.*
+                        </p>
+                    </div>
+                    
+                    <!-- Image Gallery / Photo Proof -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="col-span-2" style="max-height: 360px; width: auto;">
+                             <!-- Main Photo: High-Tech Machine or Doctor in Sterile Gear -->
+                            <!-- <img src="https://placehold.co/600x400/fbcfe8/db2777?text=Dr+Using+Micromanipulator" alt="Doctor performing ICSI" class="w-full h-full object-cover rounded-xl shadow-lg border border-pink-200"> -->
+                            
+                             <img src="./assets/doc-micro-manipulator.jpg" alt="Doctor performing ICSI" class="w-full h-full object-cover rounded-xl shadow-lg border border-pink-200">
+                        </div>
+                        <div>
+                             <!-- Secondary Photo: Embryo Transfer or Lab View -->
+                             <img src="./assets/doc-microscope.jpg" alt="Embryo sample in dish" class="w-full h-full object-cover rounded-lg shadow-md border border-pink-100">
+                        </div>
+                        <div>
+                             <!-- Tertiary Photo: Incubator or Nurse with Patient -->
+                             <img src="./assets/doc-equipment.jpg" alt="IVF Lab Environment" class="w-full h-full object-cover rounded-lg shadow-md border border-pink-100">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="py-16 bg-pink-100 mt-16">
@@ -353,10 +441,10 @@
                 <div class="mb-16 max-w-4xl mx-auto text-center">
                     <h3 class="text-2xl font-bold text-pink-600 mb-4">Our History and Mission</h3>
                     <p class="text-gray-700 text-lg mb-4">
-                        Welcome to Hope IVF Center. We have been in the field of infertility for **over ten years**. Our specialized **ART programs** are conducted in Hyderabad, Telangana, India. We are located in the heart of Hyderabad, close to leading hospitals and medical schools.
+                        Welcome to Hope IVF Center. We have been in the field of infertility for <b>over ten years</b>. Our specialized <b>ART programs</b> are conducted in Hyderabad, Telangana, India. We are located in the heart of Hyderabad, close to leading hospitals and medical schools.
                     </p>
                     <p class="text-gray-700 text-lg italic">
-                        Our aim is to offer the **latest services, with high success rates**, at very **affordable costs**, without compromising on quality.
+                        Our aim is to offer the <b>latest services, with high success rates</b>, at very <b>affordable costs</b>, without compromising on quality.
                     </p>
                     <a href="#contact" data-target="contact" class="nav-link mt-6 inline-block text-pink-600 hover:text-pink-700 font-semibold border-b-2 border-pink-600 transition-colors">See Our Location</a>
                 </div>
@@ -367,27 +455,27 @@
                      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
                          <div class="flex items-start">
                             <span class="text-pink-500 text-2xl mr-3">✔️</span>
-                            <p class="text-gray-700">**Experienced Team:** 10+ years of experience in the field of Assisted Reproductive Technology (ART).</p>
+                            <p class="text-gray-700"><b>Experienced Team:</b> 10+ years of experience in the field of Assisted Reproductive Technology (ART).</p>
                          </div>
                          <div class="flex items-start">
                             <span class="text-pink-500 text-2xl mr-3">✔️</span>
-                            <p class="text-gray-700">**Comprehensive Care:** All treatments, from diagnosis to procedure, under one roof.</p>
+                            <p class="text-gray-700"><b>Comprehensive Care:</b> All treatments, from diagnosis to procedure, under one roof.</p>
                          </div>
                          <div class="flex items-start">
                             <span class="text-pink-500 text-2xl mr-3">✔️</span>
-                            <p class="text-gray-700">**Latest Technology:** State-of-the-art equipment and advanced Embryology Laboratory.</p>
+                            <p class="text-gray-700"><b>Latest Technology:</b> State-of-the-art equipment and advanced Embryology Laboratory.</p>
                          </div>
                           <div class="flex items-start">
                             <span class="text-pink-500 text-2xl mr-3">✔️</span>
-                            <p class="text-gray-700">**Affordability:** Cost-effective programs with high-quality imported media and disposables.</p>
+                            <p class="text-gray-700"><b>Affordability:</b> Cost-effective programs with high-quality imported media and disposables.</p>
                          </div>
                           <div class="flex items-start">
                             <span class="text-pink-500 text-2xl mr-3">✔️</span>
-                            <p class="text-gray-700">**Personalized Attention:** The same doctor handles your treatment at all stages for better understanding.</p>
+                            <p class="text-gray-700"><b>Personalized Attention:</b> The same doctor handles your treatment at all stages for better understanding.</p>
                          </div>
                           <div class="flex items-start">
                             <span class="text-pink-500 text-2xl mr-3">✔️</span>
-                            <p class="text-gray-700">**Emotional Support:** We provide psychological counseling and a shoulder to rely on during challenging times.</p>
+                            <p class="text-gray-700"><b>Emotional Support:</b> We provide psychological counseling and a shoulder to rely on during challenging times.</p>
                          </div>
                      </div>
                 </div>
@@ -399,10 +487,10 @@
                         <p class="text-gray-700 mb-4">Our lab is equipped with sophisticated, modern technology and trained staff to ensure the best chances for embryo growth.</p>
 
                         <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4">
-                            <li>**Operation Theatre:** Located next to the lab with sealed communication to protect eggs/embryos from environmental changes. Equipped with latest monitors.</li>
-                            <li>**Air Quality:** Improved using special **HEPA filters** and specialized air conditioners to ensure a pristine, bacteria-free environment.</li>
-                            <li>**Microscopes & Micromanipulators:** We use globally trusted Nikon-Narishige systems for precision micro-fertilization (ICSI).</li>
-                            <li>**Incubators:** We use three top-of-the-line Carbon Dioxide Incubators from Heraea (Germany) to maintain optimal conditions for fertilization and embryo formation.</li>
+                            <li><b>Operation Theatre:</b> Located next to the lab with sealed communication to protect eggs/embryos from environmental changes. Equipped with latest monitors.</li>
+                            <li><b>Air Quality:</b> Improved using special <b>HEPA filters</b> and specialized air conditioners to ensure a pristine, bacteria-free environment.</li>
+                            <li><b>Microscopes & Micromanipulators:</b> We use globally trusted Nikon-Narishige systems for precision micro-fertilization (ICSI).</li>
+                            <li><b>Incubators:</b> We use three top-of-the-line Carbon Dioxide Incubators from Heraea (Germany) to maintain optimal conditions for fertilization and embryo formation.</li>
                         </ul>
                     </div>
                     <div class="h-64 bg-fuchsia-200 rounded-lg flex items-center justify-center">
@@ -425,7 +513,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-pink-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                             <h3 class="text-2xl font-bold text-gray-800">IVF (Test Tube Baby)</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">**In Vitro Fertilization** is where the egg and sperm are joined in the lab, outside the body. The resulting embryo is then placed back into the womb.</p>
+                        <p class="text-gray-600 mb-4"><b>In Vitro Fertilization</b> is where the egg and sperm are joined in the lab, outside the body. The resulting embryo is then placed back into the womb.</p>
                         <p class="text-sm font-semibold text-pink-700">Best for:</p>
                         <ul class="list-disc list-inside text-sm text-gray-600 ml-4">
                             <li>Blocked or missing fallopian tubes.</li>
@@ -439,7 +527,7 @@
                              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-rose-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M9 11h.01M12 11h.01M15 8h.01M9 8h.01M12 8h.01" /></svg>
                             <h3 class="text-2xl font-bold text-gray-800">ICSI (Micro-Fertilization)</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">**Intra Cytoplasmic Sperm Injection** is when a single sperm is injected directly into each egg using a special machine (Micromanipulator).</p>
+                        <p class="text-gray-600 mb-4"><b>Intra Cytoplasmic Sperm Injection</b> is when a single sperm is injected directly into each egg using a special machine (Micromanipulator).</p>
                         <p class="text-sm font-semibold text-rose-700">Best for:</p>
                         <ul class="list-disc list-inside text-sm text-gray-600 ml-4">
                             <li>Very low sperm count or poor quality sperm.</li>
@@ -453,7 +541,7 @@
                              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-fuchsia-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                             <h3 class="text-2xl font-bold text-gray-800">IUI (Artificial Insemination)</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">**Intrauterine Insemination** is a simpler technique where processed, high-quality sperm are placed directly into the uterus at the time of ovulation.</p>
+                        <p class="text-gray-600 mb-4"><b>Intrauterine Insemination</b> is a simpler technique where processed, high-quality sperm are placed directly into the uterus at the time of ovulation.</p>
                         <p class="text-sm font-semibold text-fuchsia-700">Best for:</p>
                         <ul class="list-disc list-inside text-sm text-gray-600 ml-4">
                             <li>Men with low sperm count (mildly).</li>
@@ -497,7 +585,7 @@
                              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2z" /></svg>
                             <h3 class="text-2xl font-bold text-gray-800">Blastocyst Culture</h3>
                         </div>
-                        <p class="text-gray-600 mb-4">Embryos are grown for 5 days (instead of 2-3) to reach the **Blastocyst** stage before transfer. This helps us select the strongest embryos.</p>
+                        <p class="text-gray-600 mb-4">Embryos are grown for 5 days (instead of 2-3) to reach the <b>Blastocyst</b> stage before transfer. This helps us select the strongest embryos.</p>
                         <p class="text-sm font-semibold text-indigo-700">Best for:</p>
                         <ul class="list-disc list-inside text-sm text-gray-600 ml-4">
                             <li>Patients with failed IVF cycles before.</li>
@@ -622,6 +710,73 @@
             </div>
         </section>
 
+        <section id="gallery" class="page-section py-16 md:py-24 bg-pink-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-8">Clinical Gallery & Success Moments</h2>
+                <p class="text-center text-gray-600 mb-12">See our state-of-the-art facilities and moments of hope. Hover over the images to pause the scroll.</p>
+
+                <div class="gallery-scroller horizontal-scroller relative">
+                    <div class="gallery-track flex">
+                        <!-- Group 1 (Original Images) -->
+                        <div class="flex">
+                            <!-- Image 1: Lab/Micromanipulator -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/1.jpg" alt="Doctor using Micromanipulator for ICSI" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 2: Incubator/Embryos -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/2.jpg" alt="Embryos growing in incubator" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 3: Consultation/Doctor & Couple -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/3.jpg" alt="Doctor counseling a couple" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 4: Operation Theatre -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/4.jpg" alt="Sterile Operation Theatre for procedures" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 5: Happy Family (Success Story) -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/5.jpg" alt="Happy couple holding baby" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 1: Lab/Micromanipulator -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/6.jpg" alt="Doctor using Micromanipulator for ICSI" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 2: Incubator/Embryos -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/7.jpg" alt="Embryos growing in incubator" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 3: Consultation/Doctor & Couple -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/8.jpg" alt="Doctor counseling a couple" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 4: Operation Theatre -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/11.jpg" alt="Sterile Operation Theatre for procedures" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Image 5: Happy Family (Success Story) -->
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/12.jpg" alt="Happy couple holding baby" class="w-full h-full object-cover">
+                            </div>
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/13.jpg" alt="Happy couple holding baby" class="w-full h-full object-cover">
+                            </div>
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/14.jpg" alt="Happy couple holding baby" class="w-full h-full object-cover">
+                            </div>
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/16.jpg" alt="Happy couple holding baby" class="w-full h-full object-cover">
+                            </div>
+                            <div class="gallery-item bg-gray-200 shadow-xl border-4 border-white">
+                                <img src="./assets/17.jpg" alt="Happy couple holding baby" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- FAQs Section -->
         <section id="faqs" class="page-section py-16 md:py-24 bg-pink-50">
             <div class="container mx-auto px-4 max-w-3xl">
@@ -633,7 +788,7 @@
                             When is a couple considered to have an infertility problem?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                            A couple is considered infertile if they have had **one year of unprotected intercourse** without conception. The issue affects about **10 to 15%** of all couples.
+                            A couple is considered infertile if they have had <b>one year of unprotected intercourse</b> without conception. The issue affects about <b>10 to 15%</b> of all couples.
                         </div>
                     </details>
                     <!-- FAQ Item 2: Causes of Infertility -->
@@ -642,7 +797,7 @@
                            What are the most common causes of infertility?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                           Infertility often has multiple causes. The main factors are **Male factor (40%)**, Uterine and **Tubal factor (30%)**, and **Ovulatory factor (<20%)**.
+                           Infertility often has multiple causes. The main factors are <b>Male factor (40%)</b>, Uterine and <b>Tubal factor (30%)</b>, and <b>Ovulatory factor (<20%)</b>.
                         </div>
                     </details>
                     <!-- FAQ Item 3: Age Factor -->
@@ -651,7 +806,7 @@
                             How does the woman's age affect pregnancy chances?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                            The number of infertile couples rises significantly with age. The spontaneous abortion rate also **increases from 10% (under 30) to 34% (early 40s)**, making age a critical factor.
+                            The number of infertile couples rises significantly with age. The spontaneous abortion rate also <b>increases from 10% (under 30) to 34% (early 40s)</b>, making age a critical factor.
                         </div>
                     </details>
                      <!-- FAQ Item 4: IVF Candidates -->
@@ -660,7 +815,7 @@
                             Who should choose IVF (In Vitro Fertilization)?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                           IVF is best if fallopian tubes are **blocked or absent**, for **unexplained infertility** that failed routine treatments, or for patients opting for egg/embryo donation.
+                           IVF is best if fallopian tubes are <b>blocked or absent</b>, for <b>unexplained infertility</b> that failed routine treatments, or for patients opting for egg/embryo donation.
                         </div>
                     </details>
                      <!-- FAQ Item 5: ICSI Purpose -->
@@ -669,7 +824,7 @@
                             Why is ICSI (Micro-Fertilization) needed instead of standard IVF?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                          ICSI is used for **severely low sperm counts** (less than 5 million per ml), poor quality sperms, or when **fertilization failed** in a previous IVF cycle. One sperm is injected per egg.
+                          ICSI is used for <b>severely low sperm counts</b> (less than 5 million per ml), poor quality sperms, or when <b>fertilization failed</b> in a previous IVF cycle. One sperm is injected per egg.
                         </div>
                     </details>
                     <!-- FAQ Item 6: IUI Success Rate -->
@@ -678,7 +833,7 @@
                             What is the success rate for IUI (Artificial Insemination)?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                           The success rate for IUI is generally **15-20% per cycle**. It is highest for patients with cervical factor issues or those with severely low semen counts (less than 10 million per ml).
+                           The success rate for IUI is generally <b>15-20% per cycle</b>. It is highest for patients with cervical factor issues or those with severely low semen counts (less than 10 million per ml).
                         </div>
                     </details>
                      <!-- FAQ Item 7: Egg Donation Candidates -->
@@ -687,7 +842,7 @@
                             Who qualifies for Egg Donation?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                           Women over **40-42 years old**, those in **perimenopause/menopause**, patients who have failed multiple IVF cycles, or those with **premature ovarian failure** can opt for egg donation.
+                           Women over <b>40-42 years old</b>, those in <b>perimenopause/menopause</b>, patients who have failed multiple IVF cycles, or those with <b>premature ovarian failure</b> can opt for egg donation.
                         </div>
                     </details>
                     <!-- FAQ Item 8: Embryo Donation Benefit -->
@@ -696,7 +851,7 @@
                             What is the main benefit of Embryo Donation?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                           Embryo donation has the **highest pregnancy rate (35-40%)** because it uses excellent quality embryos. It is a preferred and often **more cost-effective** option compared to full egg donation.
+                           Embryo donation has the <b>highest pregnancy rate (35-40%)</b> because it uses excellent quality embryos. It is a preferred and often <b>more cost-effective</b> option compared to full egg donation.
                         </div>
                     </details>
                     <!-- FAQ Item 9: Semen Banking Safety -->
@@ -705,7 +860,7 @@
                             How safe is semen from the Semen Bank?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                           Frozen samples are **quarantined for six months** in liquid nitrogen. The donor is retested for infections like **HIV and Hepatitis** before the sample is released, minimizing disease risk.
+                           Frozen samples are <b>quarantined for six months</b> in liquid nitrogen. The donor is retested for infections like <b>HIV and Hepatitis</b> before the sample is released, minimizing disease risk.
                         </div>
                     </details>
                     <!-- FAQ Item 10: Blastocyst Risk -->
@@ -714,7 +869,7 @@
                             Is there any risk with Blastocyst Culture?
                         </summary>
                         <div class="faq-content text-gray-600 mt-2">
-                           Yes, in 20-30% of patients, **none of the embryos may develop into a Blastocyst**, resulting in no embryo transfer. Patients are counseled on this risk before the procedure.
+                           Yes, in 20-30% of patients, <b>none of the embryos may develop into a Blastocyst</b>, resulting in no embryo transfer. Patients are counseled on this risk before the procedure.
                         </div>
                     </details>
                 </div>
